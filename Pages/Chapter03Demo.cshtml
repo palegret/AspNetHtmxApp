@@ -1,0 +1,45 @@
+﻿@page
+@model Chapter03DemoModel
+
+<h1>htmx Demo</h1>
+
+<section>
+    <h2>Dynamic Content Loading</h2>
+
+    <button 
+        hx-get="/Chapter03Demo?handler=Quote" 
+        hx-target="#quote">
+        Get Random Quote
+    </button>
+
+    <div id="quote"></div>
+</section>
+
+<section>
+    <h2>Live Search</h2>
+
+    <input type="text" 
+           name="query"
+           placeholder="Search fruits..."
+           hx-get="/Chapter03Demo?handler=Search" 
+           hx-target="#search-results" 
+           hx-trigger="keyup changed delay:300ms" />
+
+    <ul id="search-results"></ul>
+</section>
+
+<section>
+    <h2>Form Submission</h2>
+
+    <form 
+        hx-post="/Chapter03Demo?handler=Greet" 
+        hx-target="#greeting">
+        
+        @Html.AntiForgeryToken()
+        
+        <input type="text" name="name" required placeholder="Enter your name" />
+        <button type="submit">Greet Me</button>
+    </form>
+
+    <div id="greeting"></div>
+</section>

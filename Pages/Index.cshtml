@@ -1,10 +1,61 @@
 ﻿@page
 @model IndexModel
+
 @{
     ViewData["Title"] = "Home page";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+<h1>Welcome to htmx!</h1>
+
+<div class="card mt-3">
+    <div class="card-body">
+        <button 
+            hx-get="/Index?handler=Message" 
+            hx-target="#message">
+            Load Message
+        </button>
+
+        <div id="message">
+            @*Content*@
+        </div>
+    </div>
+</div>
+
+<div class="card mt-3">
+    <div class="card-body">
+        <form 
+            hx-post="/Index?handler=Submit" 
+            hx-target="#result">
+            
+            @Html.AntiForgeryToken()
+
+            <div>
+                <label for="name">Your Name:</label>
+                <input type="text" id="name" name="name" required />
+            </div>
+
+            <button type="submit">Submit</button>
+        </form>
+
+        <div id="result">
+            @*Content*@        
+        </div>    
+    </div>
+</div>
+
+<div class="card mt-3">
+    <div class="card-body">
+        <form 
+            hx-post="/Index?handler=AddItem" 
+            hx-target="#item-list" 
+            hx-swap="beforeend">
+
+            @Html.AntiForgeryToken()
+
+            <input type="text" name="item" placeholder="Enter item" required />
+            <button type="submit">Add Item</button>
+        </form>
+
+        <ul id="item-list"></ul>        
+    </div>
 </div>
