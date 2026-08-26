@@ -10,6 +10,28 @@
 
         <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
         <link rel="stylesheet" href="~/AspNetHtmxApp.styles.css" asp-append-version="true" />
+
+        <script src="~/lib/htmx/htmx.min.js"></script>
+        <script>
+            document.body.addEventListener('htmx:beforeRequest', (event) => {
+                console.log('Request starting:', event.detail.pathInfo);
+            });
+
+            document.body.addEventListener('htmx:afterRequest', (event) => {
+                console.log('Request complete:', event.detail.xhr.status);
+            });
+
+            document.body.addEventListener('htmx:responseError', (event) => {
+                console.error('Request failed:', event.detail.xhr.status);
+            });
+
+            document.body.addEventListener('htmx:configRequest', (event) => {
+                const token = document.querySelector('input[name="__RequestVerificationToken"]');
+                token && event.detail.headers['RequestVerificationToken'] = token.value;
+            });
+
+            htmx.logAll();            
+        </script>
     </head>
     <body>
         <header>
@@ -26,7 +48,7 @@
                                 <a class="nav-link text-dark" asp-area="" asp-page="/Index">Home</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-page="/Privacy">Privacy</a>
+                                <a class="nav-link text-dark" asp-area="" asp-page="/Chapter03Demo">Chapter 3 Demo</a>
                             </li>
                         </ul>
                     </div>
@@ -45,7 +67,6 @@
             </div>
         </footer>
 
-        <script src="~/lib/htmx/htmx.min.js"></script>
         <script src="~/lib/jquery/dist/jquery.min.js"></script>
         <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
 
