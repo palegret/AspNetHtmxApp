@@ -1,0 +1,36 @@
+﻿@page
+@model TasksModel
+
+@{
+    ViewData["Title"] = "Task Manager";
+}
+
+<h1>Task Manager</h1>
+
+<section>
+    <h2>Add New Task</h2>
+    <form hx-post="/Tasks?handler=Create"
+          hx-target="#task-list"
+          hx-swap="beforeend"
+          hx-on::after-request="this.reset()">
+
+        @Html.AntiForgeryToken()
+
+        <input type="text" name="title" required placeholder="Enter task title" />
+        <button type="submit">Add Task</button>
+    </form>
+</section>
+
+<section>
+    <h2>Your Tasks</h2>
+    <div id="task-list">
+        @foreach (var task in Model.Tasks)
+        {
+            <partial name="_TaskItem" model="task" />
+        }
+    </div>
+</section>
+
+<div id="edit-modal" class="modal" style="display: none;">
+    @*Edit form loads here*@
+</div>
