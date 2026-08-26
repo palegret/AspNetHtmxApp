@@ -1,0 +1,27 @@
+﻿@model TaskItem
+
+<div id="task-@Model.Id" class="task-item @(Model.IsComplete ? "complete" : "")">
+    <span class="task-title">@Model.Title</span>
+
+    <div class="task-actions">
+        <button hx-patch="/Tasks?handler=Toggle&amp;id=@Model.Id"
+                hx-target="#task-@Model.Id"
+                hx-swap="outerHTML">
+            @(Model.IsComplete ? "Undo" : "Complete")
+        </button>
+
+        <button hx-get="/Tasks?handler=Edit&amp;id=@Model.Id"
+                hx-target="#edit-modal"
+                hx-swap="innerHTML"
+                onclick="document.getElementById('edit-modal').style.display='block'">
+            Edit
+        </button>
+
+        <button hx-delete="/Tasks?handler=Remove&amp;id=@Model.Id"
+                hx-target="#task-@Model.Id"
+                hx-swap="outerHTML"
+                hx-confirm="Delete this task?">
+            Delete
+        </button>
+    </div>
+</div>

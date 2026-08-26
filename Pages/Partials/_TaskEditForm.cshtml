@@ -1,0 +1,19 @@
+﻿@model TaskItem
+
+<div class="edit-form">
+    <h3>Edit Task</h3>
+    <form hx-put="/Tasks?handler=Update&amp;id=@Model.Id"
+          hx-target="#task-@Model.Id"
+          hx-swap="outerHTML"
+          hx-on::after-request="document.getElementById('edit-modal').style.display='none'">
+
+        @Html.AntiForgeryToken()
+
+        <input type="text" name="title" value="@Model.Title" required />
+
+        <button type="submit">Save</button>
+        <button type="button" onclick="document.getElementById('edit-modal').style.display='none'">
+            Cancel
+        </button>
+    </form>
+</div>
